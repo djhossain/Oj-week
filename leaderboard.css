@@ -1,0 +1,102 @@
+:root
+{
+	--h: 50px;
+	--boxColor: #252a34;
+	--fSize: 24px;
+	--fColor: #fff;
+	--rankColor: #fff;
+	--from: 0;
+	--to: 0;
+	--totalColor: #ff2e63;
+	--bgColor: #fff;
+	--dayBarBg: #2980b9;
+}
+body
+{
+	background: var(--boxColor);
+}
+#dayBar
+{
+	width: 50%;
+	margin: 0 auto;
+	text-align: center;
+	background-color: var(--dayBarBg);
+	color: #fff;
+	padding: 20px 0;
+	/* margin-bottom: 10px; */
+}
+
+#dayBar span
+{
+	font-size: 32px;
+	text-transform: uppercase;
+	letter-spacing: 10px;
+}
+
+#dayCount
+{
+	background-color: #fff;
+	color: var(--dayBarBg);
+	padding-left: 10px;
+	border-radius: 5px;
+
+}
+
+#container
+{
+	width: 50%;
+	margin: 0 auto;
+	background: var(--bgColor);
+	height: 100vh;
+	position: relative;
+	/* padding-top: 5px; */
+}
+
+
+.rank_box
+{
+	position: absolute;
+	left: 25%;
+	font-size: var(--fSize);
+	color: var(--fColor);
+	margin: 10px auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 50%;
+	height: var(--h);
+	background-color: var(--boxColor);
+	border-radius: 10px;
+}
+
+.rank_box span
+{
+	text-transform: capitalize;
+}
+
+.rank
+{
+	margin-left: 15px;
+	height: 30px;
+	width: 30px;
+	/* padding: 5px; */
+	text-align: center;
+	background-color: var(--rankColor);
+	border-radius: 50%;
+	color: var(--boxColor);
+}
+
+.total
+{
+	text-align: center;
+	margin-right: -5px;
+	padding: 0 10px;
+	justify-content: center;
+	background-color: var(--totalColor);
+	width: 30px;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
