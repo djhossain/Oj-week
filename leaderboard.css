@@ -25,6 +25,7 @@ body
 	background-color: var(--dayBarBg);
 	color: #fff;
 	padding: 20px 0;
+	/* opacity: 0; */
 	/* margin-bottom: 10px; */
 }
 

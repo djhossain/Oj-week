@@ -4,6 +4,10 @@ const rank=0;
 const name=1;
 const total=2;
 
+const h=70;
+const posi=5;
+var lastId=1;
+
 var days= parseInt(prompt("Enter the nember of days"));
 var people= parseInt(prompt("Enter the nember of person"));
 var p=[];
@@ -12,9 +16,9 @@ p[0]=new person();
  for(var n=1;n<=people;n++)
  {
  	p[n]= new person();
- 	p[n].rank=n;
  	p[n].name=prompt("Enter the name");
  	p[n].array[0]=0;
+ 	p[n].exist=0;
  	// alert(p.name);
  	for(var i=1;i<=days;i++)
  	{
@@ -22,25 +26,6 @@ p[0]=new person();
  	}
  }
 
-var h=70;
-var posi=5;
-var id=1;
-
- for(var index=1;index<=people;index++,posi+=h)
- {
- 	p[index].start=posi;
- 	createnew(index,posi,id);
- 	id++;
- 	
- }
-
-function wait(ms) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(ms)
-    }, ms )
-  })
-}  
 
 (async function Main() {
   await wait(500);
@@ -49,15 +34,32 @@ function wait(ms) {
 		document.getElementById('dayCount').innerHTML=day;
 		for(pers=1;pers<=people;pers++)
 		{
-
-			await updateSolve(p[pers].array[day-1],p[pers].array[day],document.getElementById(pers),total);
-			//await wait(100);
+			if(p[pers].exist==0 && p[pers].array[day]>0)
+			{
+				console.log(pers);
+				p[pers].exist=1;
+				p[pers].rank=lastId;
+				p[pers].start=posi+(h*(lastId-1));
+				console.log(p[pers].start);
+ 				await createnew(pers,lastId);
+ 				await updateSolve(p[pers].array[day-1],p[pers].array[day],document.getElementById(lastId),total);
+ 				lastId++;
+			}
+			else
+			{
+				console.log('update'+pers);
+				await updateSolve(p[pers].array[day-1],p[pers].array[day],document.getElementById(pers),total);
+			}
 			var now=pers;
 			while (now>1) 
 			{
 				if(p[now].array[day]>p[now-1].array[day])
 				{
-					await swap(now);
+					if(p[now-1].exist==1)
+					{
+						await swap(now);
+					}
+
 					var temp=p[now];
 					p[now]=p[now-1];
 					p[now-1]=temp;
@@ -71,6 +73,16 @@ function wait(ms) {
 	}
   
 })();
+
+
+function wait(ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(ms)
+    }, ms )
+  })
+}  
+
 
 function updateSolve(from,to,ele,s)
 {
@@ -116,6 +128,7 @@ function swap(now)
 	p[now].start=p[now-1].start;
 	p[now-1].start=tempStart;
 
+
 	return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve()
@@ -136,12 +149,10 @@ function person()
  {
  	this.name=null;
  	this.rank=0;
- 	this.total=0;
- 	this.ctotal=0;
  	this.start=0;
- 	this.height=0;
  	this.array=[];
  	this.exist=0;
+ 	this.id;
  }
 
 var bgMain='#252a34';
@@ -176,7 +187,6 @@ function myMove(from,to,ele) {
       	} 
       	ele.style.top = pos + "px"; 
     }
-    console.log(from);
   }
 }
 
@@ -205,13 +215,35 @@ function update(from,to,ele,s) {
   }
 }
 
+function newCome(ele) {
+
+	var cls;
+  	var opa = 0.0;
+  	var pos = 270;
+  	var id = setInterval(frame, 5);
+  	function frame() {
+    if (opa == 1 && pos == 210) 
+    {
+      	clearInterval(id);
+    } 
+    else 
+    {
+    	if(pos>210)
+    		pos--;
+    	if(opa<1.0)
+    		opa+=0.02;
+      	ele.style.opacity = opa; 
+      	ele.style.left = pos + "px"; 
+      	console.log(pos);
+    }
+  }
+}
 
 
 
 
 
-
-function createnew(n,pos,newid)
+function createnew(n,newid)
 {
 	var main=document.getElementById("container");
 
@@ -219,7 +251,9 @@ function createnew(n,pos,newid)
  	div.classList.add('rank_box');
  	div.id=newid;
  	main.appendChild(div);
- 	div.style.top = pos+"px";
+ 	div.style.opacity = 0;
+ 	div.style.top = p[n].start + 'px';
+ 	p[n].id=newid;
 
  	var rankSpan= document.createElement("span");
  	rankSpan.innerHTML=p[n].rank;
@@ -232,7 +266,16 @@ function createnew(n,pos,newid)
  	div.appendChild(nameSpan);
 
  	var totalSpan= document.createElement("span");
- 	totalSpan.innerHTML=p[n].total;
+ 	totalSpan.innerHTML=0;
  	totalSpan.classList.add('total');
  	div.appendChild(totalSpan);
+
+ 	newCome(document.getElementById(newid));
+
+ 	return new Promise((resolve, reject) => {
+    	setTimeout(() => {
+      		resolve()
+    	}, 300)
+  	})
+
 }
