@@ -125,8 +125,8 @@ function person()
  }
 
 var bgMain='#252a34';
-var bgUp='#16a085';
-var bgDown='#f1c40f';
+var bgUp='#f1c40f';
+var bgDown='#16a085';
 
 function myMove(from,to,ele) {
 
