@@ -19,10 +19,9 @@ p[0]=new person();
  	p[n].name=prompt("Enter the name");
  	p[n].array[0]=0;
  	p[n].exist=0;
- 	// alert(p.name);
  	for(var i=1;i<=days;i++)
  	{
- 		p[n].array[i]=parseInt(prompt("Solve in day "+i))+p[n].array[i-1];
+ 		p[n].array[i]=parseInt(prompt(p[n].name + "'s Solve in day "+i))+p[n].array[i-1];
  	}
  }
 
@@ -36,7 +35,6 @@ p[0]=new person();
 		{
 			if(p[pers].exist==0 && p[pers].array[day]>0)
 			{
-				console.log(pers);
 				p[pers].exist=1;
 				p[pers].rank=lastId;
 				p[pers].start=posi+(h*(lastId-1));
@@ -47,7 +45,6 @@ p[0]=new person();
 			}
 			else
 			{
-				console.log('update'+pers);
 				await updateSolve(p[pers].array[day-1],p[pers].array[day],document.getElementById(pers),total);
 			}
 			var now=pers;
@@ -114,10 +111,6 @@ function swap(now)
 
 	update(now-1,now,prevbox,rank);
 	update(now,now-1,nowbox,rank);
-	//await wait(100);
-
-					//sleep(500);
-
 
 	var tempid=99999;
 	changeid(now,tempid);
@@ -155,9 +148,6 @@ function person()
  	this.id;
  }
 
-var bgMain='#252a34';
-var bgUp='#16a085';
-var bgDown='#f1c40f';
 
 function myMove(from,to,ele) {
 
