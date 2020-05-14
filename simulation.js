@@ -130,26 +130,28 @@ var bgDown='#f1c40f';
 
 function myMove(from,to,ele) {
 
+	var cls;
   	var pos = from;
-  	var id = setInterval(frame, 10);
+  	var id = setInterval(frame, 7.5);
   	function frame() {
     if (pos == to) 
     {
-    	ele.style.background = bgMain ;
-      clearInterval(id);
+    	ele.classList.remove(cls) ;
+      	clearInterval(id);
     } 
     else 
     {
 
-    	
     	if(from<to)
     	{
-    		ele.style.background = bgDown;
+    		cls = 'toDown';
+    		ele.classList.add(cls);
       		pos++;
     	}
       	else 
       	{
-      		ele.style.background = bgUp;
+      		cls = 'toUp';
+      		ele.classList.add(cls);
       	 	pos--;
       	} 
       	ele.style.top = pos + "px"; 

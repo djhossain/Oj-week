@@ -10,6 +10,8 @@
 	--totalColor: #ff2e63;
 	--bgColor: #fff;
 	--dayBarBg: #2980b9;
+	--toUpBg: #16a085;
+	--toDownBg: #f1c40f;
 }
 body
 {
@@ -100,3 +102,18 @@ body
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
+
+.toUp
+{
+	background-color: var(--toUpBg);
+	z-index: 999; 
+	transform: scale(1.1);
+}
+
+
+.toDown
+{
+	background-color: var(--toDownBg); 
+}
+
+
