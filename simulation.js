@@ -37,7 +37,6 @@ var id=1;
 function wait(ms) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("Done waiting");
       resolve(ms)
     }, ms )
   })
@@ -51,44 +50,14 @@ function wait(ms) {
 		for(pers=1;pers<=people;pers++)
 		{
 
-			update(p[pers].array[day-1],p[pers].array[day],document.getElementById(pers),total);
-			await wait(100);
+			await updateSolve(p[pers].array[day-1],p[pers].array[day],document.getElementById(pers),total);
+			//await wait(100);
 			var now=pers;
 			while (now>1) 
 			{
 				if(p[now].array[day]>p[now-1].array[day])
 				{
-					var prev=now-1;
-
-					nowbox=document.getElementById(now);
-					prevbox=document.getElementById(prev);
-
-					p[now].rank=prev;
-					p[prev].rank=now;
-
-					var s1=p[now].start;
-					var s2=p[prev].start;
-
-					myMove(s1,s2,nowbox);
-					myMove(s2,s1,prevbox);
-					await wait(700);
-
-					update(now-1,now,prevbox,rank);
-					update(now,now-1,nowbox,rank);
-					await wait(100);
-
-					//sleep(500);
-
-
-					var tempid=99999;
-					changeid(now,temp);
-					changeid(now-1,now);
-					changeid(temp,now-1);
-
-					var tempStart=p[now].start;
-					p[now].start=p[now-1].start;
-					p[now-1].start=tempStart;
-
+					await swap(now);
 					var temp=p[now];
 					p[now]=p[now-1];
 					p[now-1]=temp;
@@ -103,11 +72,62 @@ function wait(ms) {
   
 })();
 
+function updateSolve(from,to,ele,s)
+{
+	update(from,to,ele,s);
+	var de = (to-from)*50;
+  	return new Promise((resolve, reject) => {
+    	setTimeout(() => {
+      		resolve()
+    	}, de)
+  	})
 
+}
+
+function swap(now)
+{
+	var prev=now-1;
+
+	nowbox=document.getElementById(now);
+	prevbox=document.getElementById(prev);
+
+	p[now].rank=prev;
+	p[prev].rank=now;
+
+	var s1=p[now].start;
+	var s2=p[prev].start;
+
+	myMove(s1,s2,nowbox);
+	myMove(s2,s1,prevbox);
+
+	update(now-1,now,prevbox,rank);
+	update(now,now-1,nowbox,rank);
+	//await wait(100);
+
+					//sleep(500);
+
+
+	var tempid=99999;
+	changeid(now,tempid);
+	changeid(now-1,now);
+	changeid(tempid,now-1);
+
+	var tempStart=p[now].start;
+	p[now].start=p[now-1].start;
+	p[now-1].start=tempStart;
+
+	return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve()
+    }, 500 )
+  })
+
+}
  
 function changeid(from,to)
 {
 	document.getElementById(from).id=to;
+
 }
 
 
@@ -164,6 +184,7 @@ function update(from,to,ele,s) {
 
   	var pos = from;
   	var id = setInterval(frame, 50);
+
   	function frame() {
     if (pos == to) 
     {
