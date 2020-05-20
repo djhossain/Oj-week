@@ -3,9 +3,11 @@
 const rank=0;
 const name=1;
 const total=2;
+const newAudio = document.getElementById('newSound');
+const swapAudio = document.getElementById('swapSound');
 
 const h=70;
-const posi=5;
+const posi=75;
 var lastId=1;
 
 var days= parseInt(prompt("Enter the nember of days"));
@@ -38,7 +40,7 @@ p[0]=new person();
 				p[pers].exist=1;
 				p[pers].rank=lastId;
 				p[pers].start=posi+(h*(lastId-1));
-				console.log(p[pers].start);
+        newSound();
  				await createnew(pers,lastId);
  				await updateSolve(p[pers].array[day-1],p[pers].array[day],document.getElementById(lastId),total);
  				lastId++;
@@ -54,6 +56,7 @@ p[0]=new person();
 				{
 					if(p[now-1].exist==1)
 					{
+            swapSound();
 						await swap(now);
 					}
 
@@ -71,6 +74,16 @@ p[0]=new person();
   
 })();
 
+
+
+function newSound()
+{
+  newAudio.play();
+}
+function swapSound()
+{
+  swapAudio.play();
+}
 
 function wait(ms) {
   return new Promise((resolve, reject) => {
@@ -223,8 +236,7 @@ function newCome(ele) {
     	if(opa<1.0)
     		opa+=0.02;
       	ele.style.opacity = opa; 
-      	ele.style.left = pos + "px"; 
-      	console.log(pos);
+      	ele.style.left = pos + "px";
     }
   }
 }
