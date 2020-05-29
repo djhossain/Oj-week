@@ -78,10 +78,12 @@ p[0]=new person();
 
 function newSound()
 {
+  newAudio.currentTime = 0;
   newAudio.play();
 }
 function swapSound()
 {
+  swapAudio.currentTime = 0;
   swapAudio.play();
 }
 
